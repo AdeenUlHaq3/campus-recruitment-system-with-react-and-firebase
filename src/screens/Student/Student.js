@@ -32,38 +32,37 @@ class Student extends Component {
         } = this.props.Student;
 
         firebase.auth().signInWithEmailAndPassword(emailLoginStudent, passwordLoginStudent)
-            .then(() => {
-                swal('Signed In', 'Welcome Student', 'success');
-                firebase.auth().onAuthStateChanged(user => {
-                    firebase.database().ref(`students/${user.uid}`)
-                        .once('value', student => {
-                            var studentObj = student.val();
-                            this.setState({
-                                firstName: studentObj.firstName,
-                                lastName: studentObj.lastName,
-                                email: studentObj.email,
-                                password: studentObj.password,
-                                phone: studentObj.phone,
-                                city: studentObj.city,
-                                age: studentObj.age,
-                                schoolName: studentObj.schoolName,
-                                schoolGrade: studentObj.schoolGrade,
-                                collegeName: studentObj.collegeGrade,
-                                universityName: studentObj.universityName,
-                                universityGrade: studentObj.universityGrade,
-                                studentUId: user.uid
-                            })
+        .then(() => {
+            swal('Signed In', 'Welcome Student', 'success');
+            firebase.auth().onAuthStateChanged(user => {
+                firebase.database().ref(`students/${user.uid}`)
+                    .once('value', student => {
+                        var studentObj = student.val();
+                        this.setState({
+                            firstName: studentObj.firstName,
+                            lastName: studentObj.lastName,
+                            email: studentObj.email,
+                            password: studentObj.password,
+                            phone: studentObj.phone,
+                            city: studentObj.city,
+                            age: studentObj.age,
+                            schoolName: studentObj.schoolName,
+                            schoolGrade: studentObj.schoolGrade,
+                            collegeName: studentObj.collegeGrade,
+                            universityName: studentObj.universityName,
+                            universityGrade: studentObj.universityGrade,
+                            studentUId: user.uid
                         })
-                })
-                firebase.database().ref('companies')
-                    .on('child_added', (snapshot) => {
-                        firebase.database().ref(`companies/${snapshot.key}/vacancies`)
-                            .on('child_added', vacancy => {
-                                vacancies.push(vacancy.val());
-                            })
-
                     })
             })
+            firebase.database().ref('companies')
+            .on('child_added', (snapshot) => {
+                firebase.database().ref(`companies/${snapshot.key}/vacancies`)
+                .on('child_added', vacancy => {
+                    vacancies.push(vacancy.val());
+                })
+            })
+        })
     }
 
     handleChange = (e) => {
