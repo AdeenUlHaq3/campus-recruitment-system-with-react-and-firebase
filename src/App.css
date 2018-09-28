@@ -40,7 +40,7 @@
   width: 33.33%;
 }
 
-.company .nav-tabs > li, .student .nav-tabs > li {
+.company .nav-tabs > li, .student .nav-tabs > li, .admin .nav-tabs > li {
   width: 50%;
 }
 
@@ -81,12 +81,17 @@ a, h1 {
   margin: 0px auto;
 }
 
-.vacancy , .std{
+.vacancy , .std, .studentInAdmin, .companyInAdmin, .vacancyInAdmin{
   width: 100%;
   border: 1px solid #ccc;
   margin-bottom: 10px;
 }
 
-.std {
-  cursor: pointer;
+.studentInAdmin .btn, .companyInAdmin .btn, .vacancyInAdmin .btn {
+  width: 50%;
+  margin: 0;
+}
+
+.companyInAdmin .btn {
+  width: 33.33%;
 }

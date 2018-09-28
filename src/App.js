@@ -16,6 +16,8 @@ class App extends Component {
       isAdminSignedIn: false,
       isStudentSignInPage: true,
       isCompanySignInPage: true,
+      emailAdmin: '',
+      passwordAdmin: '',
       firstNameSignUpStudent: '',
       lastNameSignUpStudent: '',
       emailSignUpStudent: '',
@@ -23,6 +25,7 @@ class App extends Component {
       emailLoginStudent: '',
       passwordLoginStudent: '',
       nameSignUpCompany: '',
+      phoneSignUpCompany: '',
       emailSignUpCompany: '',
       passwordSignUpCompany: '',
       emailLoginCompany: '',
@@ -92,11 +95,12 @@ class App extends Component {
 
   companySignUp = (e) => {
     e.preventDefault();
-    const { nameSignUpCompany, emailSignUpCompany, passwordSignUpCompany } = this.state;
+    const { nameSignUpCompany, phoneSignUpCompany, emailSignUpCompany, passwordSignUpCompany } = this.state;
     firebase.auth().createUserWithEmailAndPassword(emailSignUpCompany, passwordSignUpCompany)
       .then(company => {
         firebase.database().ref(`companies/${company.user.uid}`).set({
           name: nameSignUpCompany,
+          phone: phoneSignUpCompany,
           email: emailSignUpCompany,
           password: passwordSignUpCompany
         })
@@ -104,6 +108,7 @@ class App extends Component {
             swal("Good job!", "You are registered as a company!", "success");
             this.setState({
               nameSignUpCompany: '',
+              phoneSignUpCompany: '',
               emailSignUpCompany: '',
               passwordSignUpCompany: ''
             })
@@ -142,6 +147,22 @@ class App extends Component {
     })
   }
 
+  adminLogin = (e) => {
+    e.preventDefault();
+    const { 
+      emailAdmin, 
+      passwordAdmin 
+    } = this.state;
+
+    if(emailAdmin === 'admin@gmail.com' && passwordAdmin === 'admin123') {
+      this.setState({
+        isAdminSignedIn: true
+      })
+    }
+    else
+      swal('Error', 'Wrong Username or Password', 'error');
+  }
+
   render() {
     const {
       isAdminSignedIn,
@@ -156,6 +177,7 @@ class App extends Component {
       emailLoginStudent,
       passwordLoginStudent,
       nameSignUpCompany,
+      phoneSignUpCompany,
       emailSignUpCompany,
       passwordSignUpCompany,
       emailLoginCompany,
@@ -175,7 +197,7 @@ class App extends Component {
         :
         isAdminSignedIn
         ?
-          <Admin />
+          <Admin Admin={{ logOut: () => this.setState({ isAdminSignedIn: false }) }} />
         :
         <div className="container login">
           <ul className="nav nav-tabs">
@@ -187,11 +209,11 @@ class App extends Component {
           <div className="tab-content">
             <div id="admin" className="tab-pane fade in active">
               <div>
-                <form>
+                <form onSubmit={ this.adminLogin }>
                   <h1>Login</h1>
-                  <input name='emailAdmin' className='form-control' type='email' onChange={this.handleChange} placeholder='Email' />
-                  <input name='passwordAdmin' className='form-control' type='password' onChange={this.handleChange} placeholder='Password' />
-                  <button className='btn btn-warning' type='submit'>Log In</button>
+                  <input name='emailAdmin' className='form-control' type='email' onChange={this.handleChange} required placeholder='Email' />
+                  <input name='passwordAdmin' className='form-control' type='password' onChange={this.handleChange} required placeholder='Password' />
+                  <input className='btn btn-warning' type='submit' value='Log In' />
                 </form>
               </div>
             </div>
@@ -240,6 +262,7 @@ class App extends Component {
                     <form onSubmit={this.companySignUp}>
                       <h1>Sign Up</h1>
                       <input name='nameSignUpCompany' required value={nameSignUpCompany} className='form-control' onChange={this.handleChange} placeholder='Company Name' />
+                      <input name='phoneSignUpCompany' required value={phoneSignUpCompany} className='form-control' onChange={this.handleChange} type='phone' placeholder='Phone No.' />
                       <input name='emailSignUpCompany' required value={emailSignUpCompany} className='form-control' onChange={this.handleChange} type='email' placeholder='Email' />
                       <input name='passwordSignUpCompany' required value={passwordSignUpCompany} className='form-control' onChange={this.handleChange} type='password' placeholder='Password' />
                       <input className='btn btn-warning' type='submit' value='Sign Up' />

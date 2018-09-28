@@ -48,7 +48,8 @@ class Student extends Component {
                             age: studentObj.age,
                             schoolName: studentObj.schoolName,
                             schoolGrade: studentObj.schoolGrade,
-                            collegeName: studentObj.collegeGrade,
+                            collegeName: studentObj.collegeName,
+                            collegeGrade: studentObj.collegeGrade,
                             universityName: studentObj.universityName,
                             universityGrade: studentObj.universityGrade,
                             studentUId: user.uid
@@ -142,35 +143,33 @@ class Student extends Component {
                 <div className="tab-content">
                     <div id="details" className="tab-pane fade in active">
                         <form onSubmit={this.updateStudentDetails}>
-                            <input name='firstName' className='form-control' value={firstName} onChange={this.handleChange} required placeholder='First Name' />
-                            <input name='lastName' className='form-control' value={lastName} onChange={this.handleChange} required placeholder='Last Name' />
-                            <input name='email' className='form-control' value={email} onChange={this.handleChange} type='email' required placeholder='Email' />
-                            <input name='password' className='form-control' value={password} onChange={this.handleChange} type='password' required placeholder='Email' />
-                            <input name='phone' className='form-control' value={phone} onChange={this.handleChange} type='phone' required placeholder='Phone No.' />
-                            <input name='city' className='form-control' value={city} onChange={this.handleChange} required placeholder='City' />
-                            <input name='age' className='form-control' value={age} onChange={this.handleChange} type='number' required placeholder='Age' />
-                            <input name='schoolName' className='form-control' value={schoolName} onChange={this.handleChange} required placeholder='School Name' />
-                            <input name='schoolGrade' className='form-control' value={schoolGrade} onChange={this.handleChange} required placeholder='School Grade' />
-                            <input name='collegeName' className='form-control' value={collegeName} onChange={this.handleChange} required placeholder='College Name' />
-                            <input name='collegeGrade' className='form-control' value={collegeGrade} onChange={this.handleChange} required placeholder='College Grade' />
-                            <input name='universityName' className='form-control' value={universityName} onChange={this.handleChange} required placeholder='University Name' />
-                            <input name='universityGrade' className='form-control' value={universityGrade} onChange={this.handleChange} required placeholder='University Grade' />
+                            <input name='firstName' className='form-control' value={firstName} onChange={this.handleChange} placeholder='First Name' />
+                            <input name='lastName' className='form-control' value={lastName} onChange={this.handleChange} placeholder='Last Name' />
+                            <input name='email' className='form-control' value={email} onChange={this.handleChange} type='email' placeholder='Email' />
+                            <input name='password' className='form-control' value={password} onChange={this.handleChange} type='password' placeholder='Email' />
+                            <input name='phone' className='form-control' value={phone} onChange={this.handleChange} type='phone' placeholder='Phone No.' />
+                            <input name='city' className='form-control' value={city} onChange={this.handleChange} placeholder='City' />
+                            <input name='age' className='form-control' value={age} onChange={this.handleChange} type='number' placeholder='Age' />
+                            <input name='schoolName' className='form-control' value={schoolName} onChange={this.handleChange} placeholder='School Name' />
+                            <input name='schoolGrade' className='form-control' value={schoolGrade} onChange={this.handleChange} placeholder='School Grade' />
+                            <input name='collegeName' className='form-control' value={collegeName} onChange={this.handleChange} placeholder='College Name' />
+                            <input name='collegeGrade' className='form-control' value={collegeGrade} onChange={this.handleChange} placeholder='College Grade' />
+                            <input name='universityName' className='form-control' value={universityName} onChange={this.handleChange} placeholder='University Name' />
+                            <input name='universityGrade' className='form-control' value={universityGrade} onChange={this.handleChange} placeholder='University Grade' />
                             <input className='btn btn-warning' type='submit' value='Update Details' />
                         </form>
                     </div>
                     <div id="vacancies" className="tab-pane fade">
                         {
-                            vacancies.map((vacancy, index) => {
-                                return <div key={index} className='vacancy'>
-                                    <h4>Vacany: <i>{vacancy.name}</i></h4>
-                                    <h4>Company: <i>{vacancy.companyName}</i></h4>
-                                    <h4>Email: <i>{vacancy.companyEmail}</i></h4>
-                                    <h4>Contact No: <i>{vacancy.companyNo}</i></h4>
-                                    <h4>Qualification: <i>{vacancy.qualification}</i></h4>
-                                    <h4>Designation: <i>{vacancy.designation}</i></h4>
-                                    <h4>Salary: <i>{vacancy.salary}</i></h4>
+                            vacancies.map((vacancy, index) => 
+                                <div key={index} className='vacancy'>
+                                    <h3>{vacancy.name} | ({vacancy.companyName})</h3>
+                                    <h4>{vacancy.companyEmail} | {vacancy.companyNo}</h4>
+                                    <h4>Qualification: {vacancy.qualification}</h4>
+                                    <h4>Designation: {vacancy.designation}</h4>
+                                    <h4>Salary: {vacancy.salary}</h4>
                                 </div>
-                            })
+                            )
                         }
                     </div>
                 </div>

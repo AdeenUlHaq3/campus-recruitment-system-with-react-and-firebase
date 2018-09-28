@@ -22,7 +22,8 @@ class Company extends Component {
     componentWillMount() {
         const {
             myVacancies,
-            students
+            students,
+            companyUId
         } = this.state;
 
         const {
@@ -33,10 +34,11 @@ class Company extends Component {
         firebase.auth().signInWithEmailAndPassword(emailLoginCompany, passwordLoginCompany)
             .then(company => {
                 swal('Signed In', 'Welcome Company', 'success');
+                this.setState({ companyUId: company.user.uid });
                 firebase.database().ref(`companies/${company.user.uid}/vacancies`)
-                    .on('child_added', (snapshot) => {
-                        myVacancies.push(snapshot.val());
-                    })
+                .on('child_added', (snapshot) => {
+                    myVacancies.push(snapshot.val());
+                })
             })
 
         firebase.database().ref('students')
@@ -67,15 +69,17 @@ class Company extends Component {
         } = this.state;
 
         firebase.database().ref(`companies/${companyUId}/vacancies`)
-            .push({
-                name,
-                companyName,
-                companyEmail,
-                companyNo,
-                qualification,
-                designation,
-                salary
-            })
+        .push({
+            name,
+            companyName,
+            companyEmail,
+            companyNo,
+            qualification,
+            designation,
+            salary
+        })
+        .then(() => swal('Good Job!', 'Vacancy Posted Successfully', 'success'));
+
         this.setState({
             name: '',
             companyName: '',
@@ -115,17 +119,15 @@ class Company extends Component {
                         {
                             myVacancies.map((vacancy, index) => {
                                 return <div key={index} className='vacancy'>
-                                    <h4>Vacany: <i>{vacancy.name}</i></h4>
-                                    <h4>Company: <i>{vacancy.companyName}</i></h4>
-                                    <h4>Email: <i>{vacancy.companyEmail}</i></h4>
-                                    <h4>Contact No: <i>{vacancy.companyNo}</i></h4>
-                                    <h4>Qualification: <i>{vacancy.qualification}</i></h4>
-                                    <h4>Designation: <i>{vacancy.designation}</i></h4>
-                                    <h4>Salary: <i>{vacancy.salary}</i></h4>
+                                    <h3>{vacancy.name} | ({vacancy.companyName})</h3>
+                                    <h4>{vacancy.companyEmail} | {vacancy.companyNo}</h4>
+                                    <h4>Qualification: {vacancy.qualification}</h4>
+                                    <h4>Designation: {vacancy.designation}</h4>
+                                    <h4>Salary: {vacancy.salary}</h4>
                                 </div>
                             })
                         }
-                        <input className='btn btn-success' type='button' onClick={() => this.setState({ myVacancyPage: false })} value='Back' />
+                        <input className='btn btn-default' type='button' onClick={() => this.setState({ myVacancyPage: false })} value='Back' />
                     </div>
                     :
                     <div>
@@ -150,13 +152,16 @@ class Company extends Component {
                             </div>
                             <div id="students" className="tab-pane fade">
                                 {
-                                    students.map((student, index) => {
-                                        return <div onClick={ this.student } key={index} className='std'>
-                                            <h4>Name: <i>{student.firstName} {student.lastName}</i></h4>
-                                            <h4>University: <i>{student.universityName}</i></h4>
-                                            <h4>GPA: <i>{student.universityGrade}</i></h4>
+                                    students.map((student, index) => 
+                                        <div key={index} className='std'>
+                                           <h3>{student.firstName} {student.lastName}</h3>
+                                            <h4>{student.email} | {student.phone} | {student.city}</h4>
+                                            <h4>Age: {student.age}</h4>
+                                            <h4>School: {student.schoolName} | Grade: {student.schoolGrade}</h4>
+                                            <h4>College: {student.collegeName} | Grade: {student.collegeGrade}</h4>
+                                            <h4>University: {student.universityName} | GPA: {student.universityGrade}</h4>
                                         </div>
-                                    })
+                                    )
                                 }
                             </div>
                         </div>
