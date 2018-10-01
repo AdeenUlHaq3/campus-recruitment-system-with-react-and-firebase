@@ -23,44 +23,47 @@ class Student extends Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const { vacancies } = this.state;
-
+        
         const {
-            emailLoginStudent,
-            passwordLoginStudent
+            hideNav
         } = this.props.Student;
 
-        firebase.auth().signInWithEmailAndPassword(emailLoginStudent, passwordLoginStudent)
-        .then(() => {
-            swal('Signed In', 'Welcome Student', 'success');
-            firebase.auth().onAuthStateChanged(user => {
-                firebase.database().ref(`students/${user.uid}`)
-                    .once('value', student => {
-                        var studentObj = student.val();
-                        this.setState({
-                            firstName: studentObj.firstName,
-                            lastName: studentObj.lastName,
-                            email: studentObj.email,
-                            password: studentObj.password,
-                            phone: studentObj.phone,
-                            city: studentObj.city,
-                            age: studentObj.age,
-                            schoolName: studentObj.schoolName,
-                            schoolGrade: studentObj.schoolGrade,
-                            collegeName: studentObj.collegeName,
-                            collegeGrade: studentObj.collegeGrade,
-                            universityName: studentObj.universityName,
-                            universityGrade: studentObj.universityGrade,
-                            studentUId: user.uid
-                        })
-                    })
+        hideNav();
+
+        firebase.auth().onAuthStateChanged(user => {
+            firebase.database().ref(`Users/${user.uid}`)
+            .once('value', student => {
+                var studentObj = student.val();
+                this.setState({
+                    firstName: studentObj.firstName,
+                    lastName: studentObj.lastName,
+                    email: studentObj.email,
+                    password: studentObj.password,
+                    phone: studentObj.phone || '',
+                    city: studentObj.city || '',
+                    age: studentObj.age || '',
+                    schoolName: studentObj.schoolName || '',
+                    schoolGrade: studentObj.schoolGrade || '',
+                    collegeName: studentObj.collegeName || '',
+                    collegeGrade: studentObj.collegeGrade || '',
+                    universityName: studentObj.universityName || '',
+                    universityGrade: studentObj.universityGrade || '',
+                    studentUId: user.uid
+                })
             })
-            firebase.database().ref('companies')
-            .on('child_added', (snapshot) => {
-                firebase.database().ref(`companies/${snapshot.key}/vacancies`)
+
+            firebase.database().ref('Users')
+            .orderByChild('type')
+            .equalTo('company')
+            .on('child_added', company => {
+                firebase.database().ref(`Users/${company.key}/vacancies`)
                 .on('child_added', vacancy => {
                     vacancies.push(vacancy.val());
+                    this.setState({
+                        vacancies
+                    })
                 })
             })
         })
@@ -74,6 +77,7 @@ class Student extends Component {
 
     updateStudentDetails = (e) => {
         e.preventDefault();
+
         const {
             studentUId,
             firstName,
@@ -91,25 +95,25 @@ class Student extends Component {
             universityGrade
         } = this.state;
 
-        firebase.database().ref(`students/${studentUId}`)
-            .update({
-                firstName,
-                lastName,
-                email,
-                password,
-                phone,
-                city,
-                age,
-                schoolName,
-                schoolGrade,
-                collegeName,
-                collegeGrade,
-                universityName,
-                universityGrade
-            })
-            .then(() => {
-                swal('Success', 'Student Details Updated', 'success');
-            })
+        firebase.database().ref(`Users/${studentUId}`)
+        .update({
+            firstName,
+            lastName,
+            email,
+            password,
+            phone,
+            city,
+            age,
+            schoolName,
+            schoolGrade,
+            collegeName,
+            collegeGrade,
+            universityName,
+            universityGrade
+        })
+        .then(() => {
+            swal('Success', 'Student Details Updated', 'success');
+        })
     }
 
     render() {
@@ -130,11 +134,13 @@ class Student extends Component {
             universityGrade
         } = this.state;
 
-        const { logOut } = this.props.Student;
+        const {
+            signOut
+        } = this.props.Student;
 
         return (
             <div className='container student'>
-                <input className='btn btn-success' type='button' value='Logout' onClick={logOut} />
+                <input className='btn btn-success' type='button' value='Logout' onClick={() => signOut('studentLogin')} />
                 <ul className="nav nav-tabs">
                     <li className="active"><a data-toggle="tab" href="#details">Details</a></li>
                     <li><a data-toggle="tab" href="#vacancies">Vacancies</a></li>
@@ -161,7 +167,7 @@ class Student extends Component {
                     </div>
                     <div id="vacancies" className="tab-pane fade">
                         {
-                            vacancies.map((vacancy, index) => 
+                            vacancies.map((vacancy, index) =>
                                 <div key={index} className='vacancy'>
                                     <h3>{vacancy.name} | ({vacancy.companyName})</h3>
                                     <h4>{vacancy.companyEmail} | {vacancy.companyNo}</h4>

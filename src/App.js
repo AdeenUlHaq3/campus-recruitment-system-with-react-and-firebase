@@ -2,281 +2,123 @@ import React, { Component } from 'react';
 import './App.css';
 import firebase from 'firebase';
 import swal from 'sweetalert';
+import { Route, Switch, NavLink, withRouter } from 'react-router-dom';
 
+import AdminLogin from './components/AdminLogin';
+import StudentLogin from './components/StudentLogin';
+import StudentSignUp from './components/StudentSignUp';
+import CompanyLogin from './components/CompanyLogin';
+import ComapnySignUp from './components/CompanySignUp';
 import Student from './screens/Student/Student';
 import Company from './screens/Company/Company';
 import Admin from './screens/Admin/Admin';
+import MyVacancies from './screens/Company/MyVacancies';
+import EditStudent from './screens/Admin/EditStudent';
+import EditCompany from './screens/Admin/EditCompany';
+import ShowVacancies from './screens/Admin/ShowVacancies';
+import EditVacacny from './screens/Admin/EditVacancy';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      isStudentSignedIn: false,
-      isCompanySignedIn: false,
-      isAdminSignedIn: false,
-      isStudentSignInPage: true,
-      isCompanySignInPage: true,
-      emailAdmin: '',
-      passwordAdmin: '',
-      firstNameSignUpStudent: '',
-      lastNameSignUpStudent: '',
-      emailSignUpStudent: '',
-      passwordSignUpStudent: '',
-      emailLoginStudent: '',
-      passwordLoginStudent: '',
-      nameSignUpCompany: '',
-      phoneSignUpCompany: '',
-      emailSignUpCompany: '',
-      passwordSignUpCompany: '',
-      emailLoginCompany: '',
-      passwordLoginCompany: ''
+      isUser: false
     }
   }
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
-
-  studentSignUp = (e) => {
-    e.preventDefault();
-    const { firstNameSignUpStudent, lastNameSignUpStudent, emailSignUpStudent, passwordSignUpStudent } = this.state;
-    firebase.auth().createUserWithEmailAndPassword(emailSignUpStudent, passwordSignUpStudent)
-      .then(student => {
-        firebase.database().ref(`students/${student.user.uid}`).set({
-          firstName: firstNameSignUpStudent,
-          lastName: lastNameSignUpStudent,
-          email: emailSignUpStudent,
-          password: passwordSignUpStudent
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      if(user)
+        firebase.database().ref(`Users/${user.uid}`)
+        .once('value', user => {
+          this.props.history.push(`/${user.val().type}`)
         })
-          .then(() => {
-            swal("Good job!", "You are registered as an student!", "success");
-            this.setState({
-              firstNameSignUpStudent: '',
-              lastNameSignUpStudent: '',
-              emailSignUpStudent: '',
-              passwordSignUpStudent: ''
-            })
-          })
-      })
-  }
+  })
+}
 
-  studentLogin = (e) => {
+  signIn = (e, type, email, password) => {
     e.preventDefault();
-    const { emailLoginStudent, passwordLoginStudent } = this.state;
-    firebase.database()
-      .ref(`students`)
-      .orderByChild('email')
-      .equalTo(emailLoginStudent)
-      .once('value', snapshot => {
-        if (snapshot.val()) {
-          snapshot.forEach(student => {
-            if (student.val().password === passwordLoginStudent){
-              this.setState({ isStudentSignedIn: true });
-            }
-            else
-              swal('Error', 'Wrong Username or Password', 'error');
-          })
-        }
-        else
-          swal('Error', 'Wrong Username or Password', 'error');
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(snapshot => {
+        firebase.database().ref(`Users/${snapshot.user.uid}`)
+        .once('value', user => {
+          const userObj = user.val();
+          if(!userObj) {
+            return firebase.auth().currentUser.delete()
+            .then(() => {
+              swal('Sorry', `This ${type} is deleted by admin`, 'error');
+            })
+          }
+          
+          if(userObj.type === type) {
+            swal('Signed In', `Welcome ${type}`, 'success');
+            this.props.history.push(`/${type}`);
+          }
+          else 
+            swal('Warning', 'You are logging through wrong form', 'error');      
+        })
+      })
+      .catch((error) => {
+        if(error.code === 'auth/user-not-found')
+          swal('Sorry', 'There is no user with these credentials', 'error');
+        
       })
   }
 
-  studentLogOut = () => {
+  signOut = (type = '') => {
     firebase.auth().signOut()
     .then(() => {
       this.setState({
-        isStudentSignedIn: false
+        isUser: false
       })
+      this.props.history.push(`/${type}`);
     })
   }
 
-  companySignUp = (e) => {
-    e.preventDefault();
-    const { nameSignUpCompany, phoneSignUpCompany, emailSignUpCompany, passwordSignUpCompany } = this.state;
-    firebase.auth().createUserWithEmailAndPassword(emailSignUpCompany, passwordSignUpCompany)
-      .then(company => {
-        firebase.database().ref(`companies/${company.user.uid}`).set({
-          name: nameSignUpCompany,
-          phone: phoneSignUpCompany,
-          email: emailSignUpCompany,
-          password: passwordSignUpCompany
-        })
-          .then(() => {
-            swal("Good job!", "You are registered as a company!", "success");
-            this.setState({
-              nameSignUpCompany: '',
-              phoneSignUpCompany: '',
-              emailSignUpCompany: '',
-              passwordSignUpCompany: ''
-            })
-          })
-      })
-  }
-
-  companyLogin = (e) => {
-    e.preventDefault();
-    const { emailLoginCompany, passwordLoginCompany } = this.state;
-    firebase.database()
-      .ref(`companies`)
-      .orderByChild('email')
-      .equalTo(emailLoginCompany)
-      .once('value', (snapshot) => {
-        if (snapshot.val()) {
-          snapshot.forEach(company => {
-            if (company.val().password === passwordLoginCompany) {
-              this.setState({ isCompanySignedIn: true });
-            }
-            else
-              swal('Error', 'Wrong Username or Password', 'error');
-          })
-        }
-        else
-          swal('Error', 'Wrong Username or Password', 'error');
-      })
-  }
-
-  companyLogOut = () => {
-    firebase.auth().signOut()
-    .then(() => {
+  hideNav = () => {
+    if(!this.state.isUser)
       this.setState({
-        isCompanySignedIn: false
+        isUser: true
       })
-    })
-  }
-
-  adminLogin = (e) => {
-    e.preventDefault();
-    const { 
-      emailAdmin, 
-      passwordAdmin 
-    } = this.state;
-
-    if(emailAdmin === 'admin@gmail.com' && passwordAdmin === 'admin123') {
-      this.setState({
-        isAdminSignedIn: true
-      })
-    }
-    else
-      swal('Error', 'Wrong Username or Password', 'error');
   }
 
   render() {
     const {
-      isAdminSignedIn,
-      isCompanySignedIn,
-      isStudentSignedIn,
-      isStudentSignInPage,
-      isCompanySignInPage,
-      firstNameSignUpStudent,
-      lastNameSignUpStudent,
-      emailSignUpStudent,
-      passwordSignUpStudent,
-      emailLoginStudent,
-      passwordLoginStudent,
-      nameSignUpCompany,
-      phoneSignUpCompany,
-      emailSignUpCompany,
-      passwordSignUpCompany,
-      emailLoginCompany,
-      passwordLoginCompany
+      isUser
     } = this.state;
 
     return (
       <div className="App">
-      {
-        isStudentSignedIn
-        ?
-          <Student Student={{ logOut:this.studentLogOut, isStudentSignedIn, emailLoginStudent, passwordLoginStudent }} />
-        :
-        isCompanySignedIn
-        ?
-          <Company Company={{ logOut:this.companyLogOut, emailLoginCompany, passwordLoginCompany }} />
-        :
-        isAdminSignedIn
-        ?
-          <Admin Admin={{ logOut: () => this.setState({ isAdminSignedIn: false }) }} />
-        :
         <div className="container login">
-          <ul className="nav nav-tabs">
-            <li className="active"><a data-toggle="tab" href="#admin">Admin</a></li>
-            <li><a data-toggle="tab" href="#student">Student</a></li>
-            <li><a data-toggle="tab" href="#company">Company</a></li>
-          </ul>
-
-          <div className="tab-content">
-            <div id="admin" className="tab-pane fade in active">
-              <div>
-                <form onSubmit={ this.adminLogin }>
-                  <h1>Login</h1>
-                  <input name='emailAdmin' className='form-control' type='email' onChange={this.handleChange} required placeholder='Email' />
-                  <input name='passwordAdmin' className='form-control' type='password' onChange={this.handleChange} required placeholder='Password' />
-                  <input className='btn btn-warning' type='submit' value='Log In' />
-                </form>
-              </div>
+          {
+            !isUser
+            &&
+            <div className='nav'>
+              <NavLink className='btn btn-warning active' to='/'>Admin</NavLink>
+              <NavLink className='btn btn-warning' to='/studentLogin'>Student</NavLink>
+              <NavLink className='btn btn-warning' to='/companyLogin'>Company</NavLink>  
             </div>
-            <div id="student" className="tab-pane fade">
-              {
-                isStudentSignInPage
-                  ?
-                  <div>
-                    <form onSubmit={this.studentLogin}>
-                      <h1>Login</h1>
-                      <input name='emailLoginStudent' className='form-control' type='email' onChange={this.handleChange} placeholder='Email' />
-                      <input name='passwordLoginStudent' className='form-control' type='password' onChange={this.handleChange} placeholder='Password' />
-                      <button className='btn btn-warning' type='submit'>Log In</button>
-                      <span>Don't have an account? <a onClick={() => this.setState({ isStudentSignInPage: false })}>Sign Up</a></span>
-                    </form>
-                  </div>
-                  :
-                  <div>
-                    <form onSubmit={this.studentSignUp}>
-                      <h1>Sign Up</h1>
-                      <input name='firstNameSignUpStudent' required value={firstNameSignUpStudent} className='form-control' onChange={this.handleChange} placeholder='First Name' />
-                      <input name='lastNameSignUpStudent' required value={lastNameSignUpStudent} className='form-control' onChange={this.handleChange} placeholder='Last Name' />
-                      <input name='emailSignUpStudent' required value={emailSignUpStudent} className='form-control' onChange={this.handleChange} type='email' placeholder='Email' />
-                      <input name='passwordSignUpStudent' required value={passwordSignUpStudent} className='form-control' onChange={this.handleChange} type='password' placeholder='Password' />
-                      <input className='btn btn-warning' type='submit' value='Sign Up' />
-                      <span>Already have an account? <a onClick={() => this.setState({ isStudentSignInPage: true })}>Log In</a></span>
-                    </form>
-                  </div>
-              }
-            </div>
-            <div id="company" className="tab-pane fade">
-              {
-                isCompanySignInPage
-                  ?
-                  <div>
-                    <form onSubmit={this.companyLogin}>
-                      <h1>Login</h1>
-                      <input name='emailLoginCompany' className='form-control' type='email' onChange={this.handleChange} placeholder='Email' />
-                      <input name='passwordLoginCompany' className='form-control' type='password' onChange={this.handleChange} placeholder='Password' />
-                      <input className='btn btn-warning' value='Log In' type='submit' />
-                      <span>Don't have an account? <a onClick={() => this.setState({ isCompanySignInPage: false })}>Sign Up</a></span>
-                    </form>
-                  </div>
-                  :
-                  <div>
-                    <form onSubmit={this.companySignUp}>
-                      <h1>Sign Up</h1>
-                      <input name='nameSignUpCompany' required value={nameSignUpCompany} className='form-control' onChange={this.handleChange} placeholder='Company Name' />
-                      <input name='phoneSignUpCompany' required value={phoneSignUpCompany} className='form-control' onChange={this.handleChange} type='phone' placeholder='Phone No.' />
-                      <input name='emailSignUpCompany' required value={emailSignUpCompany} className='form-control' onChange={this.handleChange} type='email' placeholder='Email' />
-                      <input name='passwordSignUpCompany' required value={passwordSignUpCompany} className='form-control' onChange={this.handleChange} type='password' placeholder='Password' />
-                      <input className='btn btn-warning' type='submit' value='Sign Up' />
-                      <span>Already have an account? <a onClick={() => this.setState({ isCompanySignInPage: true })}>Log In</a></span>
-                    </form>
-                  </div>
-              }
-            </div>
-          </div>
+          }
+          
+          <Switch>
+            <Route path='/' render={(props) => <AdminLogin {...props} AdminLogin={{ signIn: this.signIn }} />} exact />
+            <Route path='/studentSignUp' component={ StudentSignUp } />
+            <Route path='/studentLogin' render={(props) => <StudentLogin {...props} StudentLogin={{ signIn: this.signIn }} />} />
+            <Route path='/companySignUp' component={ ComapnySignUp } />
+            <Route path='/companyLogin' render={(props) => <CompanyLogin {...props} CompanyLogin={{ signIn: this.signIn }} />} />
+            <Route path='/admin' render={(props) => <Admin {...props} Admin={{ hideNav: this.hideNav, signOut: this.signOut }} />} />
+            <Route path='/student' render={(props) => <Student {...props} Student={{ hideNav: this.hideNav, signOut: this.signOut }} />} />
+            <Route path='/company' render={(props) => <Company {...props} Company={{ hideNav: this.hideNav, signOut: this.signOut }} />} />
+            <Route path='/myVacancies' component={ MyVacancies } />
+            <Route path='/editStudent' component={ EditStudent } />} />
+            <Route path='/editCompany' component={ EditCompany } />} />
+            <Route path='/showVacancies' component={ ShowVacancies } />} />
+            <Route path='/editVacancy' component={ EditVacacny } />} />
+          </Switch>
         </div>
-      }
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
