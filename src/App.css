@@ -1,31 +1,51 @@
-.App {
+body {
+  background: url('Assets/Images/def.jpg') no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+}
+
+header span {
+  margin: 5px;
+  height: 100%;
+  width: 200px;
+  float: left;
+  border: 0;
+  background: url('./Assets/Images/logo.png') no-repeat;
+}
+
+header {
+  width: 100%;
+  height: 60px;
+  background: rgba(0, 0, 0, .5);
+}
+
+.nav {
+  width: 50%;
+  height: 100%;
   text-align: center;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.nav .btn {
+  border: 0;
+  border-radius: 0;
+  width: 33.33% !important;
+  height: 100%;
+  line-height: 40px;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+} 
+
+.nav .btn.active {
+  color: #fff;
+  background: rgba(0, 0, 0, .1) !important;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.nav .btn:hover, .nav .btn.active:hover {
+  transform: scale(1.1) !important;
+  color: #fff;
+  background: transparent !important;
 }
 
 .nav-tabs > li > a {
@@ -34,6 +54,8 @@
   border-radius: 0;
   font-weight: bold;
   color: #f0ad4e;
+  border: 0 !important;
+  border-bottom: 1px solid#f0ad4e !important;
 }
 
 .login .nav-tabs > li {
@@ -44,27 +66,34 @@
   width: 50%;
 }
 
+.btn-warning {
+  background: #ec971f !important;
+}
+
 .nav-tabs > li.active > a {
   background: #f0ad4e;
   color: #fff;
+  border-bottom: 1px solid #f0ad4e !important;
 }
 
 .nav-tabs {
   margin-bottom: 10px;
 }
 
-.btn, form .btn, .form-control, span {
+.nav-tabs > li.active a:hover {
+  color: #fff;
+  cursor: pointer;
+  background: #ec971f;
+}
+
+.btn, form .btn, .form-control {
   padding: 10px;
   margin-bottom: 10px;
   text-align: center;
   width: 100% !important;
   border-radius: 0;
+  border: 0;
   font-weight: bold;
-}
-
-span {
-  display: block;
-  color: #666;
 }
 
 a:hover {
@@ -73,7 +102,7 @@ a:hover {
 }
 
 a, h1 {
-  color: #f0ad4e;
+  color: #fff;
 }
 
 .myVacancies {
@@ -83,21 +112,12 @@ a, h1 {
 
 .vacancy , .std, .studentInAdmin, .companyInAdmin, .vacancyInAdmin{
   width: 100%;
-  border: 1px solid #ccc;
+  border: 1px solid #fff;
   margin-bottom: 10px;
+  color: #fff;
 }
 
 .studentInAdmin .btn, .companyInAdmin .btn, .vacancyInAdmin .btn {
   width: 50% !important;
   margin: 0;
-}
-
-.companyInAdmin .btn, .nav .btn {
-  border: 0;
-  border-radius: 0;
-  width: 33.33% !important;
-  margin: 0;
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
 }

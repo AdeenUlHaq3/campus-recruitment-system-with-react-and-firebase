@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import './StudentLogin.css';
 
 class StudentLogin extends Component {
     constructor() {
@@ -28,12 +29,12 @@ class StudentLogin extends Component {
         } = this.props.StudentLogin;
 
         return (
-            <form onSubmit={ (e) => signIn(e, 'student', email, password) }>
+            <form id='student-login' onSubmit={ (e) => signIn(e, 'student', email, password) }>
                 <h1>StudentLogin</h1>
-                <input name='email' className='form-control' type='email' onChange={ this.handleChange } placeholder='Email' />
-                <input name='password' className='form-control' type='password' onChange={ this.handleChange } placeholder='Password' />
-                <button className='btn btn-warning' type='submit'>Log In</button>
-                <span>Don't have an account? <NavLink to='/studentSignUp'>Sign Up</NavLink></span>
+                <input name='email' className='form-control' type='email' onChange={ this.handleChange } placeholder='E&#9993;ail' />
+                <input name='password' className='form-control' type='password' onChange={ this.handleChange } placeholder='P@ssword' />
+                <button className='btn fa fa-sign-in' type='submit'></button>
+                <span>Don't have an account? <NavLink style={{ color: 'rgba(0 ,0 ,0 , .6)' }} to='/studentSignUp'>Sign Up</NavLink></span>
             </form>
         );
     }

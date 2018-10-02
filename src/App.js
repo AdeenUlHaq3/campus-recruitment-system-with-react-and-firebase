@@ -4,19 +4,19 @@ import firebase from 'firebase';
 import swal from 'sweetalert';
 import { Route, Switch, NavLink, withRouter } from 'react-router-dom';
 
-import AdminLogin from './components/AdminLogin';
-import StudentLogin from './components/StudentLogin';
-import StudentSignUp from './components/StudentSignUp';
-import CompanyLogin from './components/CompanyLogin';
-import ComapnySignUp from './components/CompanySignUp';
+import AdminLogin from './components/AdminLogin/AdminLogin';
+import StudentLogin from './components/StudentLogin/StudentLogin';
+import StudentSignUp from './components/StudentSignUp/StudentSignUp';
+import CompanyLogin from './components/CompanyLogin/CompanyLogin';
+import ComapnySignUp from './components/CompanySignUp/CompanySignUp';
 import Student from './screens/Student/Student';
 import Company from './screens/Company/Company';
 import Admin from './screens/Admin/Admin';
-import MyVacancies from './screens/Company/MyVacancies';
-import EditStudent from './screens/Admin/EditStudent';
-import EditCompany from './screens/Admin/EditCompany';
-import ShowVacancies from './screens/Admin/ShowVacancies';
-import EditVacacny from './screens/Admin/EditVacancy';
+import MyVacancies from './screens/MyVacancies/MyVacancies';
+import EditStudent from './screens/EditStudent/EditStudent';
+import EditCompany from './screens/EditCompany/EditCompany';
+import ShowVacancies from './screens/ShowVacancies/ShowVacancies';
+import EditVacacny from './screens/EditVacancy/EditVacancy';
 
 class App extends Component {
   constructor() {
@@ -31,9 +31,9 @@ class App extends Component {
       if(user)
         firebase.database().ref(`Users/${user.uid}`)
         .once('value', user => {
-          this.props.history.push(`/${user.val().type}`)
+          this.props.history.push(`/${user.val().type}`);
         })
-  })
+    })
 }
 
   signIn = (e, type, email, password) => {
@@ -86,18 +86,21 @@ class App extends Component {
     const {
       isUser
     } = this.state;
-
+    
     return (
-      <div className="App">
-        <div className="container login">
+      <div>
+        <div className="login">
           {
             !isUser
             &&
-            <div className='nav'>
-              <NavLink className='btn btn-warning active' to='/'>Admin</NavLink>
-              <NavLink className='btn btn-warning' to='/studentLogin'>Student</NavLink>
-              <NavLink className='btn btn-warning' to='/companyLogin'>Company</NavLink>  
-            </div>
+            <header>
+              <span></span>
+              <div className='nav container'>
+                <NavLink id='admin' className='btn' to='/'>Admin</NavLink>
+                <NavLink id='student' className='btn' to='/studentLogin'>Student</NavLink>
+                <NavLink id='company' className='btn' to='/companyLogin'>Company</NavLink>  
+              </div>
+            </header>
           }
           
           <Switch>

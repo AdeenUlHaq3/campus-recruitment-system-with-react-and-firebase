@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './AdminLogin.css';
 
 class AdminLogin extends Component {
     constructor() {
@@ -27,11 +28,11 @@ class AdminLogin extends Component {
         } = this.props.AdminLogin;
 
         return (
-            <form onSubmit={(e) => signIn(e, 'admin', email, password)}>
+            <form id='admin-login' onSubmit={(e) => signIn(e, 'admin', email, password)}>
                 <h1>AdminLogin</h1>
-                <input name='email' className='form-control' type='email' onChange={ this.handleChange } required placeholder='Email' />
-                <input name='password' className='form-control' type='password' onChange={ this.handleChange } required placeholder='Password' />
-                <input className='btn btn-warning' type='submit' value='Log In' />
+                <input name='email' className='form-control' type='email' onChange={ this.handleChange } required placeholder='E&#9993;ail' />
+                <input name='password' className='form-control' type='password' onChange={ this.handleChange } required placeholder='P@ssword' />
+                <button className='btn fa fa-sign-in' type='submit'></button>
             </form>
         );
     }

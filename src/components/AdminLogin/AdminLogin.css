@@ -1,0 +1,39 @@
+#admin-login {
+    width: 50% !important;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#admin-login .form-control, #admin-login .btn {
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, .6);
+    color: rgba(0, 0, 0, .6);
+}
+
+#admin-login h1, #admin-login .btn {
+    color: rgba(0, 0, 0, .6);
+}
+
+#admin-login .btn {
+    width: 25% !important;
+    float: right;
+}
+
+#admin-login .btn:hover {
+    background: rgba(0, 0, 0, .6);
+    color: #fff;
+    transition: all 1s;
+}
+
+#admin-login ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(0, 0, 0, .6);
+    opacity: 1; /* Firefox */
+}
+
+#admin-login :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgba(0, 0, 0, .6);
+}
+
+#admin-login ::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgba(0, 0, 0, .6);
+}

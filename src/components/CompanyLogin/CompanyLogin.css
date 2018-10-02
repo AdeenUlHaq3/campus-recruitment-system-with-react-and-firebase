@@ -1,0 +1,45 @@
+#company-login {
+    width: 50% !important;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#company-login .form-control, #company-login .btn {
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, .6);
+    color: rgba(0, 0, 0, .6);
+}
+
+#company-login h1, #company-login .btn, #company-login span {
+    color: rgba(0, 0, 0, .6);
+}
+
+#company-login .btn {
+    width: 25% !important;
+    float: right;
+}
+
+#company-login .btn:hover {
+    background: rgba(0, 0, 0, .6);
+    color: #fff;
+    transition: all 1s;
+}
+
+#company-login span {
+    line-height: 40px;
+    float: left;
+    font-weight: bold;
+}
+
+#company-login ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(0, 0, 0, .6);
+    opacity: 1; /* Firefox */
+}
+
+#company-login :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgba(0, 0, 0, .6);
+}
+
+#company-login ::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgba(0, 0, 0, .6);
+}

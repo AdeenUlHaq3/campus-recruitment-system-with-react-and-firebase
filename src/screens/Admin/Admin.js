@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import swal from 'sweetalert';
 import { withRouter } from 'react-router-dom';
+import './Admin.css';
 
 class Admin extends Component {
     constructor() {
@@ -83,7 +83,7 @@ class Admin extends Component {
                     <div id="student" className="tab-pane fade in active">
                         {
                             students.map((student, index) =>
-                                <div key={student.key} className='studentInAdmin'>
+                                <div key={student.key} className='student'>
                                     <h3>{student.val.firstName} {student.val.lastName}</h3>
                                     <h4>{student.val.email} | {student.val.phone} | {student.val.city}</h4>
                                     <h4>Age: {student.val.age}</h4>
@@ -99,7 +99,7 @@ class Admin extends Component {
                     <div id="company" className="tab-pane fade">
                         {
                             companies.map((company, index) =>
-                                <div key={company.key} className='companyInAdmin'>
+                                <div key={company.key} className='company'>
                                     <h3>{company.val.name}</h3>
                                     <h4>{company.val.email}</h4>
                                     <h4>{company.val.phone}</h4>
