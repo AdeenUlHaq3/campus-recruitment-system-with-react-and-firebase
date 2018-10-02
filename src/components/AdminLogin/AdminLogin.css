@@ -12,6 +12,7 @@
 
 #admin-login h1, #admin-login .btn {
     color: rgba(0, 0, 0, .6);
+    margin: 10px 0px;
 }
 
 #admin-login .btn {

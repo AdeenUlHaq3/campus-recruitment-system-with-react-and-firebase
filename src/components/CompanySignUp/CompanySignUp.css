@@ -1,46 +1,46 @@
-#student-login {
+#company-signup {
     width: 50% !important;
     text-align: center;
     margin: 0 auto;
 }
 
-#student-login .form-control, #student-login .btn {
+#company-signup .form-control, #company-signup .btn {
     background: transparent;
     border: 1px solid rgba(0, 0, 0, .6);
     color: rgba(0, 0, 0, .6);
 }
 
-#student-login h1, #student-login .btn, #student-login span {
+#company-signup h1, #company-signup .btn, #company-signup span {
     color: rgba(0, 0, 0, .6);
-    margin: 10px 0px;
+    margin: 10px 0px; 
 }
 
-#student-login .btn {
+#company-signup .btn {
     width: 25% !important;
     float: right;
 }
 
-#student-login .btn:hover {
+#company-signup .btn:hover {
     background: rgba(0, 0, 0, .6);
     color: #fff;
     transition: all 1s;
 }
 
-#student-login span {
+#company-signup span {
     line-height: 40px;
     float: left;
     font-weight: bold;
 }
 
-#student-login ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+#company-signup ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: rgba(0, 0, 0, .6);
     opacity: 1; /* Firefox */
 }
 
-#student-login :-ms-input-placeholder { /* Internet Explorer 10-11 */
+#company-signup :-ms-input-placeholder { /* Internet Explorer 10-11 */
     color: rgba(0, 0, 0, .6);
 }
 
-#student-login ::-ms-input-placeholder { /* Microsoft Edge */
+#company-signup ::-ms-input-placeholder { /* Microsoft Edge */
     color: rgba(0, 0, 0, .6);
 }

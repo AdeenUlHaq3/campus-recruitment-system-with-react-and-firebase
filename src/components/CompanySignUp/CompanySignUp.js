@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import swal from 'sweetalert';
 import { NavLink } from 'react-router-dom';
+import './CompanySignUp.css';
 
 class CompanySignUp extends Component {
     constructor() {
@@ -47,14 +48,14 @@ class CompanySignUp extends Component {
         } = this.state;
 
         return (
-            <form onSubmit={(e) => this.signUp(e, 'company', name, phone, email, password)}>
+            <form id='company-signup' onSubmit={(e) => this.signUp(e, 'company', name, phone, email, password)}>
                 <h1>CompanySignUp</h1>
-                <input name='name' required className='form-control' value={ name } onChange={ this.handleChange } placeholder='Company Name' />
-                <input name='phone' required className='form-control' value={ phone } onChange={ this.handleChange } type='phone' placeholder='Phone No.' />
-                <input name='email' required className='form-control' value={ email } onChange={ this.handleChange } type='email' placeholder='Email' />
-                <input name='password' required className='form-control' value={ password } onChange={ this.handleChange } type='password' placeholder='Password' />
-                <input className='btn btn-warning' type='submit' value='Sign Up' />
-                <span>Already have an account? <NavLink to='/companyLogin'>Log In</NavLink></span>
+                <input name='name' required className='form-control' value={ name } onChange={ this.handleChange } placeholder='Company N@me' />
+                <input name='phone' required className='form-control' value={ phone } onChange={ this.handleChange } type='phone' placeholder='P&#9743;one' />
+                <input name='email' required className='form-control' value={ email } onChange={ this.handleChange } type='email' placeholder='E&#9993;ail' />
+                <input name='password' required className='form-control' value={ password } onChange={ this.handleChange } type='password' placeholder='P@ssword' />
+                <button className='btn fa fa-user-plus' type='submit'></button>
+                <span>Already have an account? <NavLink style={{ color: 'rgba(0 ,0 ,0 , .6)' }} to='/companyLogin'>Log In</NavLink></span>
             </form>
         );
     }
