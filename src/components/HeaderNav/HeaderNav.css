@@ -1,0 +1,38 @@
+header span {
+    margin: 5px 10px;
+    height: 100%;
+    width: 200px;
+    float: left;
+    border: 0;
+    /* background: url('./Assets/Images/logo.png') no-repeat; */
+  }
+  
+  header {
+    width: 100%;
+    background: rgba(0, 0, 0, .5);
+  }
+  
+  .nav {
+    width: 50%;
+    text-align: center;
+  }
+  
+  .nav .btn {
+    border: 0;
+    border-radius: 0;
+    width: 33.33% !important;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+  } 
+  
+  .nav .btn.active {
+    color: #fff;
+    background: rgba(0, 0, 0, .1) !important;
+  }
+  
+  .nav .btn:hover, .nav .btn.active:hover {
+    transform: scale(1.1) !important;
+    color: #fff;
+    background: transparent !important;
+  }

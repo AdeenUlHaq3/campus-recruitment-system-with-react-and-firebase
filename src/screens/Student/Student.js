@@ -25,7 +25,7 @@ class Student extends Component {
 
     componentWillMount() {
         const { vacancies } = this.state;
-        
+
         const {
             hideNav
         } = this.props.Student;
@@ -34,38 +34,38 @@ class Student extends Component {
 
         firebase.auth().onAuthStateChanged(user => {
             firebase.database().ref(`Users/${user.uid}`)
-            .once('value', student => {
-                var studentObj = student.val();
-                this.setState({
-                    firstName: studentObj.firstName,
-                    lastName: studentObj.lastName,
-                    email: studentObj.email,
-                    password: studentObj.password,
-                    phone: studentObj.phone || '',
-                    city: studentObj.city || '',
-                    age: studentObj.age || '',
-                    schoolName: studentObj.schoolName || '',
-                    schoolGrade: studentObj.schoolGrade || '',
-                    collegeName: studentObj.collegeName || '',
-                    collegeGrade: studentObj.collegeGrade || '',
-                    universityName: studentObj.universityName || '',
-                    universityGrade: studentObj.universityGrade || '',
-                    studentUId: user.uid
-                })
-            })
-
-            firebase.database().ref('Users')
-            .orderByChild('type')
-            .equalTo('company')
-            .on('child_added', company => {
-                firebase.database().ref(`Users/${company.key}/vacancies`)
-                .on('child_added', vacancy => {
-                    vacancies.push(vacancy.val());
+                .once('value', student => {
+                    var studentObj = student.val();
                     this.setState({
-                        vacancies
+                        firstName: studentObj.firstName,
+                        lastName: studentObj.lastName,
+                        email: studentObj.email,
+                        password: studentObj.password,
+                        phone: studentObj.phone || '',
+                        city: studentObj.city || '',
+                        age: studentObj.age || '',
+                        schoolName: studentObj.schoolName || '',
+                        schoolGrade: studentObj.schoolGrade || '',
+                        collegeName: studentObj.collegeName || '',
+                        collegeGrade: studentObj.collegeGrade || '',
+                        universityName: studentObj.universityName || '',
+                        universityGrade: studentObj.universityGrade || '',
+                        studentUId: user.uid
                     })
                 })
-            })
+
+            firebase.database().ref('Users')
+                .orderByChild('type')
+                .equalTo('company')
+                .on('child_added', company => {
+                    firebase.database().ref(`Users/${company.key}/vacancies`)
+                        .on('child_added', vacancy => {
+                            vacancies.push({ key: vacancy.key, companyKey: company.key, val: vacancy.val() });
+                            this.setState({
+                                vacancies
+                            })
+                        })
+                })
         })
     }
 
@@ -96,24 +96,57 @@ class Student extends Component {
         } = this.state;
 
         firebase.database().ref(`Users/${studentUId}`)
-        .update({
-            firstName,
-            lastName,
-            email,
-            password,
-            phone,
-            city,
-            age,
-            schoolName,
-            schoolGrade,
-            collegeName,
-            collegeGrade,
-            universityName,
-            universityGrade
-        })
-        .then(() => {
-            swal('Success', 'Student Details Updated', 'success');
-        })
+            .update({
+                firstName,
+                lastName,
+                email,
+                password,
+                phone,
+                city,
+                age,
+                schoolName,
+                schoolGrade,
+                collegeName,
+                collegeGrade,
+                universityName,
+                universityGrade
+            })
+            .then(() => {
+                swal('Success', 'Student Details Updated', 'success');
+            })
+    }
+
+    applyForVacancy = (key, companyKey) => {
+        const { studentUId } = this.state;
+
+        firebase.database().ref(`Users/${companyKey}/vacancies/${key}/students`)
+            .once('value', (snapshot) => {
+                const studentIds = snapshot.val();
+                console.log(studentIds);
+
+                if (!studentIds) {
+                    firebase.database().ref(`Users/${companyKey}/vacancies/${key}/students`)
+                    .set({
+                        studentUIds: [studentUId]
+                    })
+                    return;
+                }
+                studentIds.studentUIds.map((studentId) => {
+                    if (studentUId === studentId) {
+
+                    }
+                    else {
+                        studentId.studentUIds.push(studentUId);
+                        firebase.database().ref(`Users/${companyKey}/vacancies/${key}/students`)
+                            .set({
+                                studentUIds: studentId.studentUIds
+                            })
+                    }
+                })
+
+            })
+
+
     }
 
     render() {
@@ -169,11 +202,12 @@ class Student extends Component {
                         {
                             vacancies.map((vacancy, index) =>
                                 <div key={index} className='vacancy'>
-                                    <h3>{vacancy.name} | ({vacancy.companyName})</h3>
-                                    <h4>{vacancy.companyEmail} | {vacancy.companyNo}</h4>
-                                    <h4>Qualification: {vacancy.qualification}</h4>
-                                    <h4>Designation: {vacancy.designation}</h4>
-                                    <h4>Salary: {vacancy.salary}</h4>
+                                    <h3>{vacancy.val.name} | ({vacancy.val.companyName})</h3>
+                                    <h4>{vacancy.val.companyEmail} | {vacancy.val.companyNo}</h4>
+                                    <h4>Qualification: {vacancy.val.qualification}</h4>
+                                    <h4>Designation: {vacancy.val.designation}</h4>
+                                    <h4>Salary: {vacancy.val.salary}</h4>
+                                    <button onClick={() => this.applyForVacancy(vacancy.key, vacancy.companyKey)}>Apply Now</button>
                                 </div>
                             )
                         }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import firebase from 'firebase';
 import swal from 'sweetalert';
-import { Route, Switch, NavLink, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 import AdminLogin from './components/AdminLogin/AdminLogin';
 import StudentLogin from './components/StudentLogin/StudentLogin';
@@ -17,6 +17,7 @@ import EditStudent from './screens/EditStudent/EditStudent';
 import EditCompany from './screens/EditCompany/EditCompany';
 import ShowVacancies from './screens/ShowVacancies/ShowVacancies';
 import EditVacacny from './screens/EditVacancy/EditVacancy';
+import HeaderNav from './components/HeaderNav/HeaderNav';
 
 class App extends Component {
   constructor() {
@@ -55,7 +56,7 @@ class App extends Component {
             this.props.history.push(`/${type}`);
           }
           else 
-            swal('Warning', 'You are logging through wrong form', 'error');      
+            swal('Warning', 'You are signing in through wrong form', 'error');      
         })
       })
       .catch((error) => {
@@ -86,6 +87,7 @@ class App extends Component {
     const {
       isUser
     } = this.state;
+    console.log(this.props.history);
     
     return (
       <div>
@@ -93,14 +95,7 @@ class App extends Component {
           {
             !isUser
             &&
-            <header>
-              <span></span>
-              <div className='nav container'>
-                <NavLink id='admin' className='btn fa fa-user-o' to='/'></NavLink>
-                <NavLink id='student' className='btn fa fa-graduation-cap' to='/studentLogin'></NavLink>
-                <NavLink id='company' className='btn fa fa-building-o' to='/companyLogin'></NavLink>  
-              </div>
-            </header>
+            <HeaderNav />
           }
           
           <Switch>
