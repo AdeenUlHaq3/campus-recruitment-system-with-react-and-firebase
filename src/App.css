@@ -1,68 +1,6 @@
 body {
   background: url('Assets/Images/def.jpg') no-repeat;
   background-size: cover;
-  width: 100vw;
-  height: 100vh;
-}
-
-.nav-tabs > li > a {
   width: 100%;
-  text-align: center;	
-  border-radius: 0;
-  font-weight: bold;
-  color: #f0ad4e;
-  border: 0 !important;
-  border-bottom: 1px solid#f0ad4e !important;
-}
-
-.company .nav-tabs > li, .student .nav-tabs > li, .admin .nav-tabs > li {
-  width: 50%;
-}
-
-.nav-tabs > li.active > a {
-  background: #f0ad4e;
-  color: #fff;
-  border-bottom: 1px solid #f0ad4e !important;
-}
-
-.nav-tabs > li.active a:hover {
-  color: #fff;
-  cursor: pointer;
-  background: #ec971f;
-}
-
-.btn, form .btn, .form-control {
-  padding: 10px;
-  margin-bottom: 10px;
-  text-align: center;
-  width: 100% !important;
-  border-radius: 0;
-  border: 0;
-  font-weight: bold;
-}
-
-a:hover {
-  text-decoration: none;
-  cursor: pointer;
-}
-
-a, h1 {
-  color: #fff;
-}
-
-.myVacancies {
-  width: 100%;
-  margin: 0px auto;
-}
-
-.vacancy , .std, .studentInAdmin, .companyInAdmin, .vacancyInAdmin{
-  width: 100%;
-  border: 1px solid #fff;
-  margin-bottom: 10px;
-  color: #fff;
-}
-
-.studentInAdmin .btn, .companyInAdmin .btn, .vacancyInAdmin .btn {
-  width: 50% !important;
-  margin: 0;
+  height: 100%;
 }

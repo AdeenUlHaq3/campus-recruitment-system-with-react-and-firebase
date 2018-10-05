@@ -1,0 +1,60 @@
+company .btn {
+    width: 50% !important;
+}
+
+company .company .btn {
+    width: 33.33% !important;
+}
+
+ul.nav.nav-tabs {
+    width: 100%;
+}
+
+.nav-tabs > li > a {
+  width: 100%;
+  text-align: center;	
+  border-radius: 0;
+  font-weight: bold;
+  color: rgba(0, 0, 0, .6);
+  border: 0 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, .6) !important;
+}
+
+
+.company .form-control {
+    background: transparent;
+    margin: 10px 0px;
+    border: 1px solid rgba(0, 0, 0, .6);
+    border-radius: 0;
+    font-weight: bold;
+    text-align: center;
+}
+
+.company .nav-tabs > li {
+    width: 50%;
+}
+
+.nav-tabs > li.active > a {
+    background: rgba(0, 0, 0, .6);
+    color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, .6) !important;
+  }
+  
+.nav-tabs > li.active a:hover {
+    color: #fff;
+    cursor: pointer;
+    background: rgba(0, 0, 0, .6);
+}
+
+.company ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(0, 0, 0, .6);
+    opacity: 1; /* Firefox */
+}
+
+.company :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgba(0, 0, 0, .6);
+}
+
+.company ::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgba(0, 0, 0, .6);
+}

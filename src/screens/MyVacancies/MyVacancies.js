@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import './MyVacancies.css';
 
 class MyVacancies extends Component {
     constructor() {
@@ -28,6 +29,13 @@ class MyVacancies extends Component {
         })
     }
 
+    showAppliedStudents = (studentUIds) => {
+        this.props.history.push({
+            pathname: '/appliedStudents',
+            studentUIds
+        })
+    }
+
     render() {
         const {
             myVacancies
@@ -43,6 +51,7 @@ class MyVacancies extends Component {
                             <h4>Qualification: {vacancy.qualification}</h4>
                             <h4>Designation: {vacancy.designation}</h4>
                             <h4>Salary: {vacancy.salary}</h4>
+                            <button onClick={ () => this.showAppliedStudents(vacancy.studentUIds) }>Applied Students</button>
                         </div>
                     })
                 }

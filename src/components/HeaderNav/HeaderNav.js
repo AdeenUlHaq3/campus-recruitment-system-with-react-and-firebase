@@ -6,8 +6,8 @@ export default () =>
     <header>
         <span></span>
         <div className='nav container'>
-            <NavLink id='admin' className='btn fa fa-user-o' to='/'></NavLink>
-            <NavLink id='student' className='btn fa fa-graduation-cap' to='/studentLogin'></NavLink>
-            <NavLink id='company' className='btn fa fa-building-o' to='/companyLogin'></NavLink>
+            <NavLink id='admin' className='fa fa-user-o' to='/'></NavLink>
+            <NavLink id='student' className='fa fa-graduation-cap' to='/studentLogin'></NavLink>
+            <NavLink id='company' className='fa fa-building-o' to='/companyLogin'></NavLink>
         </div>
     </header>

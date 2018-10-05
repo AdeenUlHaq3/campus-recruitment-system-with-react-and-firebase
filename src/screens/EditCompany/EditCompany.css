@@ -1,40 +1,31 @@
-#student-login {
-    width: 50% !important;
+form {
+    margin: 0px auto;
+    width: 50%;
     text-align: center;
-    margin: 0 auto;
 }
 
-#student-login .form-control, #student-login .btn {
+.form-control {
     background: transparent;
     border-radius: 0;
     margin-top: 10px;
     text-align: center;
     font-weight: bold;
-    padding: 10px;
     border: 1px solid rgba(0, 0, 0, .6);
     color: rgba(0, 0, 0, .6);
 }
 
-#student-login h1, #student-login .btn, #student-login span {
-    color: rgba(0, 0, 0, .6);
-    margin: 10px 0px;
-}
-
-#student-login .btn {
-    width: 25% !important;
-    float: right;
-}
-
-#student-login .btn:hover {
+#edit-company .btn {
     background: rgba(0, 0, 0, .6);
+    border: 0;
+    border-radius: 0;
     color: #fff;
-    transition: all 1s;
+    font-weight: bold;
+    margin-top: 10px;
+    width:100%;
 }
 
-#student-login span {
-    line-height: 40px;
-    float: left;
-    font-weight: bold;
+#edit-company .btn:hover {
+    color: #fff;
 }
 
 #student-login ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */

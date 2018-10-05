@@ -18,6 +18,7 @@ import EditCompany from './screens/EditCompany/EditCompany';
 import ShowVacancies from './screens/ShowVacancies/ShowVacancies';
 import EditVacacny from './screens/EditVacancy/EditVacancy';
 import HeaderNav from './components/HeaderNav/HeaderNav';
+import AppliedStudents from './screens/AppliedStudents/AppliedStudents';
 
 class App extends Component {
   constructor() {
@@ -61,33 +62,30 @@ class App extends Component {
       })
       .catch((error) => {
         if(error.code === 'auth/user-not-found')
-          swal('Sorry', 'There is no user with these credentials', 'error');
-        
+          swal('Sorry', 'There is no user with these credentials', 'error');         
       })
   }
 
   signOut = (type = '') => {
     firebase.auth().signOut()
     .then(() => {
+      this.props.history.push(`/${type}`);
       this.setState({
         isUser: false
       })
-      this.props.history.push(`/${type}`);
     })
   }
 
   hideNav = () => {
-    if(!this.state.isUser)
-      this.setState({
-        isUser: true
-      })
+    this.setState({
+      isUser: true
+    })
   }
 
   render() {
     const {
       isUser
     } = this.state;
-    console.log(this.props.history);
     
     return (
       <div>
@@ -112,6 +110,7 @@ class App extends Component {
             <Route path='/editCompany' component={ EditCompany } />} />
             <Route path='/showVacancies' component={ ShowVacancies } />} />
             <Route path='/editVacancy' component={ EditVacacny } />} />
+            <Route path='/appliedStudents' component={ AppliedStudents } />} />
           </Switch>
         </div>
       </div>

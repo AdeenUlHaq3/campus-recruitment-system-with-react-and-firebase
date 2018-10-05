@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import swal from 'sweetalert';
+import './EditCompany.css';
 
 class EditCompany extends Component {
     constructor() {
@@ -60,11 +61,11 @@ class EditCompany extends Component {
         } = this.state;
 
         return (
-            <form onSubmit={this.updateCompany}>
+            <form id='edit-company' onSubmit={this.updateCompany}>
                 <h1>Edit Company</h1>
                 <input name='name' required value={name} className='form-control' onChange={this.handleChange} placeholder='Company Name' />
                 <input name='phone' required value={phone} className='form-control' onChange={this.handleChange} type='phone' placeholder='Phone No.' />
-                <input className='btn btn-warning' type='submit' value='Update Company' />
+                <input className='btn' type='submit' value='Update Company' />
             </form>
         );
     }

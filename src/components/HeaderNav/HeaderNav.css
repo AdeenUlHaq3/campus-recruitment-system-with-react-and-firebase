@@ -1,12 +1,3 @@
-header span {
-    margin: 5px 10px;
-    height: 100%;
-    width: 200px;
-    float: left;
-    border: 0;
-    /* background: url('./Assets/Images/logo.png') no-repeat; */
-  }
-  
   header {
     width: 100%;
     background: rgba(0, 0, 0, .5);
@@ -17,21 +8,24 @@ header span {
     text-align: center;
   }
   
-  .nav .btn {
+  .nav .fa {
     border: 0;
     border-radius: 0;
+    text-decoration: none;
     width: 33.33% !important;
     padding: 20px;
     text-align: center;
     font-weight: bold;
+    color: #fff;
   } 
   
-  .nav .btn.active {
+  .nav .fa.active {
     color: #fff;
     background: rgba(0, 0, 0, .1) !important;
   }
   
-  .nav .btn:hover, .nav .btn.active:hover {
+  .nav .fa:hover, .nav .fa.active:hover {
+    text-decoration: none;
     transform: scale(1.1) !important;
     color: #fff;
     background: transparent !important;
