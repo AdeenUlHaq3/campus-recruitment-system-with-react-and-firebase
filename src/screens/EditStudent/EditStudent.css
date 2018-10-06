@@ -1,10 +1,10 @@
-#edit-company {
+#edit-student {
     margin: 0px auto;
     width: 50%;
     text-align: center;
 }
 
-#edit-company  .form-control {
+#edit-student  .form-control {
     background: transparent;
     border-radius: 0;
     margin-top: 10px;
@@ -14,7 +14,7 @@
     color: rgba(0, 0, 0, .6);
 }
 
-#edit-company .btn {
+#edit-student .btn {
     background: rgba(0, 0, 0, .6);
     border: 0;
     border-radius: 0;
@@ -24,21 +24,21 @@
     width:100%;
 }
 
-#edit-company .btn:hover {
+#edit-student .btn:hover {
     color: rgba(0, 0, 0, .6);
     background: transparent;
     border: 1px solid rgba(0, 0, 0, .6);
 }
 
-#edit-company ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+#edit-student ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: rgba(0, 0, 0, .6);
     opacity: 1; /* Firefox */
 }
 
-#edit-company :-ms-input-placeholder { /* Internet Explorer 10-11 */
+#edit-student :-ms-input-placeholder { /* Internet Explorer 10-11 */
     color: rgba(0, 0, 0, .6);
 }
 
-#edit-company ::-ms-input-placeholder { /* Microsoft Edge */
+#edit-student ::-ms-input-placeholder { /* Microsoft Edge */
     color: rgba(0, 0, 0, .6);
 }

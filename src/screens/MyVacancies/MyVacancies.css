@@ -1,0 +1,19 @@
+.myVacancies .vacancy {
+    border: 1px solid rgba(0, 0, 0, .6);
+    margin-top: 10px;
+    padding: 0 10px 10px;
+}
+
+.myVacancies .vacancy button {
+    background: rgba(0, 0, 0, .6);
+    border: 0;
+    padding: 10px;
+    color: #fff;
+    border: 1px solid rgba(0, 0, 0, .6);
+    font-weight: bold;
+}
+
+.myVacancies .vacancy button:hover {
+    background: transparent;
+    color: rgba(0, 0, 0, .6);
+}

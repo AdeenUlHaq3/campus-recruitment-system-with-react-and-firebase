@@ -169,8 +169,8 @@ class Student extends Component {
 
         return (
             <div>
-                <header>
-                    <input className='btn btn-success' type='button' value='Logout' onClick={() => signOut('studentLogin')} />
+                <header id='student-header'>
+                    <input className='btn' type='button' value='Logout' onClick={() => signOut('studentLogin')} />
                 </header>
                 <div className='container student'>
                     <ul className="nav nav-tabs">

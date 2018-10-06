@@ -108,8 +108,8 @@ class Company extends Component {
 
         return (
             <div>
-                <header>
-                    <input className='btn btn-success' type='button' value='Logout' onClick={() => signOut('companyLogin')} />
+                <header id='company-header'>
+                    <input className='btn' type='button' value='Logout' onClick={() => signOut('companyLogin')} />
                 </header>
                 <div className="container company" >
                     <div>
@@ -128,8 +128,8 @@ class Company extends Component {
                                     <input name='qualification' className='form-control' value={qualification} onChange={this.handleChange} required placeholder='Qualification' />
                                     <input name='designation' className='form-control' value={designation} onChange={this.handleChange} required placeholder='Designation' />
                                     <input type='number' name='salary' className='form-control' value={salary} onChange={this.handleChange} required placeholder='Salary' />
-                                    <input className='btn btn-warning' type='submit' value='Post Vacancy' />
-                                    <NavLink className='btn btn-success' to='/myVacancies'>My Vacancies</NavLink>
+                                    <input className='btn' type='submit' value='Post Vacancy' />
+                                    <NavLink className='btn' to='/myVacancies'>My Vacancies</NavLink>
                                 </form>
                             </div>
                             <div id="students" className="tab-pane fade">

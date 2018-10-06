@@ -23,8 +23,11 @@ class AppliedStudents extends Component {
         if(studentUIds)
             studentUIds.map(studentUId => {
                 firebase.database().ref(`Users/${studentUId}`)
-                .once('value', (student) => {
-                    students.push({key: student.key, val: student.val()});
+                .once('value', student => {
+                    if(student.val())
+                        students.push({key: student.key, val: student.val()});
+                })
+                .then(() => {
                     this.setState({ students });
                 })
             })
@@ -34,13 +37,13 @@ class AppliedStudents extends Component {
         const {
             students
         } = this.state;
-
+        
         return (
-            <div id="students">
+            <div className='col-md-12' id="students">
                 <h1>Applied Students</h1>
                 {
                     students.map(student => 
-                        <div key={student.key}>
+                        <div key={student.key} className='appliedStudents'>
                             <h3>{student.val.firstName} {student.val.lastName}</h3>
                             <h4>{student.val.email} | {student.val.phone} | {student.val.city}</h4>
                             <h4>Age: {student.val.age}</h4>

@@ -129,7 +129,7 @@ class Admin extends Component {
 
         return (
             <div>
-                <header>
+                <header id='admin-header'>
                     <input className='btn' type='button' value='Logout' onClick={() => signOut()} />
                 </header>
                 <div className='container admin'>

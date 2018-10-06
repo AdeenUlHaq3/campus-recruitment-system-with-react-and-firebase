@@ -45,17 +45,19 @@ class App extends Component {
         firebase.database().ref(`Users/${snapshot.user.uid}`)
         .once('value', user => {
           const userObj = user.val();
+          
           if(!userObj) {
-            return firebase.auth().currentUser.delete()
+            firebase.auth().currentUser.delete()
             .then(() => {
               swal('Sorry', `This ${type} is deleted by admin`, 'error');
             })
           }
           
-          if(userObj.type === type) {
+          else if(userObj.type === type) {
             swal('Signed In', `Welcome ${type}`, 'success');
             this.props.history.push(`/${type}`);
           }
+          
           else 
             swal('Warning', 'You are signing in through wrong form', 'error');      
         })

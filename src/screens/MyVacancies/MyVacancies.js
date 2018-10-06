@@ -41,7 +41,7 @@ class MyVacancies extends Component {
             myVacancies
         } = this.state;
         return (
-            <div className='myVacancies' >
+            <div className='col-md-12 myVacancies' >
                 <h1>My Vacancies</h1>
                 {
                     myVacancies.map((vacancy, index) => {

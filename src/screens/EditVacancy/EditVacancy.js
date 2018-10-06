@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import swal from 'sweetalert';
+import './EditVacancy.css';
 
 class EditVacacny extends Component {
     constructor() {
@@ -88,7 +89,7 @@ class EditVacacny extends Component {
         } = this.state;
 
         return (
-            <form onSubmit={this.updateVacancy}>
+            <form id='edit-vacancy' onSubmit={this.updateVacancy}>
                 <h1>Edit Vacancy</h1>
                 <input name='name' className='form-control' value={name} onChange={this.handleChange} required placeholder='Vacancy' />
                 <input name='companyName' className='form-control' value={companyName} onChange={this.handleChange} required placeholder='Company Name' />
