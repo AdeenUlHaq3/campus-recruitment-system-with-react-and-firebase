@@ -1,7 +1,7 @@
 #admin-login {
-    width: 50% !important;
+    width: 50%;
     text-align: center;
-    margin: 0 auto;
+    margin: 0px auto;
 }
 
 #admin-login .form-control, #admin-login .btn {

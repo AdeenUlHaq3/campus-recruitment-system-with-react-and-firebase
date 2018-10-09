@@ -20,7 +20,8 @@ class Student extends Component {
             collegeGrade: '',
             universityName: '',
             universityGrade: '',
-            vacancies: []
+            vacancies: [],
+            studentUIds: []
         }
     }
 
@@ -125,7 +126,7 @@ class Student extends Component {
 
         firebase.database().ref(`Users/${companyKey}/vacancies/${key}`)
             .once('value', (snapshot) => {
-                const studentUIds = snapshot.val().studentUIds;
+                const studentUIds = snapshot.val().studentUIds || [];
                 studentUIds.push(studentUId);
 
                 firebase.database().ref(`Users/${companyKey}/vacancies/${key}`)
@@ -135,6 +136,9 @@ class Student extends Component {
                     .then(() => {
                         vacancies.map(vacancy => {
                             if (vacancy.key === key) {
+                                if(!vacancy.val.studentUIds) {
+                                    vacancy.val.studentUIds = [];
+                                }
                                 vacancy.val.studentUIds.push(studentUId);
                                 this.setState({ vacancies });
                                 return;
